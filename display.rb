@@ -58,8 +58,7 @@ end
 
 def get_column
   print_line(50)
-  puts "Now, Insert the number of the column"
-  puts "1, 2 or 3"
+  puts "Now, Insert the number of the column \n 1, 2 or 3"
   print_line(50)
   column = gets.to_i
 end

@@ -2,7 +2,7 @@ module Core
 
   class Game
 
-  attr_accessor :tictactoe
+  attr_accessor :tictactoe, :player1, :player2
 
   require 'matrix'
 
@@ -13,26 +13,42 @@ module Core
       ["B", " ", " ", " "],
       ["C", " ", " ", " "]
     ]
+    @player1 = "X"
+    @player2 = "O"
   end
 
   def play_versus_player
-    puts "versus player"
+
   end
 
   def play_versus_computer
     puts "versus cpu"
+    rand()
+  end
+
+  def is_game_over?
+    false
+  end
+
+  def declare_winner
+    "tie"
   end
 
   def player_entry(row, column)
-    if is_space_empty?
+    if is_space_empty?(row, column)
       @tictactoe[row, column] << "X"
     else
      puts "The space is ocuppied, try in another one"
     end
   end
 
-  def is_space_empty?
-    true
+  def is_space_empty?(row, column)
+    if @tictactoe[row, column] == " "
+      true
+    else
+      false
+    end
   end
+
   end
 end
