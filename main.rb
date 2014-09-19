@@ -53,11 +53,7 @@ def print_tictactoe
 end
 
 def insert_entry_menu
-  column = get_column
-  row = get_row
-  puts "COLUMN #{column}"
-  puts "ROW #{row}"
-  #@game.player_entry(row, column)
+  @game.player_entry(get_row.to_i, get_column.to_i)
 end
 
 def get_column
@@ -73,14 +69,13 @@ def get_row
   puts "Now, insert the letter of your row"
   puts "A, B or C"
   print_line(50)
-  row = convert_entry(gets.to_s)
+  row = convert_entry(gets.chomp)
 end
 
 def convert_entry(letter_row)
   num_row = 1 if letter_row == "A"
   num_row = 2 if letter_row == "B"
   num_row = 3 if letter_row == "C"
-  #num_row = 500
 end
 
 self.initial_menu

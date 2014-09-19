@@ -31,10 +31,6 @@ module Core
     end
   end
 
-  def generate_tictactoe
-    #todo print it
-  end
-
   def is_space_empty?
     true
   end
