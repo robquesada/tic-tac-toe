@@ -5,7 +5,7 @@ public
 
 def initial_menu
   print_line(50)
-  puts "Welcome to The Tic Tac Toe Game!"
+  puts "Welcome to The Tic Tac Toe Game!\n\n"
   puts "Choose an option:"
   puts "(1) Player versus Player"
   puts "(2) Player versus Computer"
@@ -58,7 +58,7 @@ end
 
 def get_column
   print_line(50)
-  puts "Insert the number of the column of your entry"
+  puts "Now, Insert the number of the column"
   puts "1, 2 or 3"
   print_line(50)
   column = gets.to_i
@@ -66,16 +66,21 @@ end
 
 def get_row
   print_line(50)
-  puts "Now, insert the letter of your row"
+  puts "Insert the letter of your row"
   puts "A, B or C"
   print_line(50)
   row = convert_entry(gets.chomp)
 end
 
 def convert_entry(letter_row)
-  num_row = 1 if letter_row == "A"
-  num_row = 2 if letter_row == "B"
-  num_row = 3 if letter_row == "C"
+  case letter_row
+  when "A"
+    num_row = 1
+  when "B"
+    num_row = 2
+  when "C"
+    num_row = 3
+  end
 end
 
 self.initial_menu
