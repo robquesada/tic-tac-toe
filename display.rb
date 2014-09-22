@@ -58,7 +58,7 @@ end
 def insert_entry_menu
   puts "\nPlayer 1 (X)\n"
   @game.player_entry(get_row.to_i, get_column.to_i, "X")
-  if !@game.is_vs_computer
+  if !@game.is_vs_computer && !@game.is_game_over?
     print_tictactoe
     puts "\nPlayer 2 (O)\n"
     @game.player_entry(get_row.to_i, get_column.to_i, "O")

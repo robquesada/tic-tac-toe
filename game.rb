@@ -1,7 +1,7 @@
 module Core
   class Game
 
-    attr_accessor :tictactoe, :is_vs_computer
+    attr_accessor :tictactoe, :is_vs_computer, :result
 
     require 'matrix'
 
@@ -23,11 +23,7 @@ module Core
     end
 
     def is_game_over?
-      is_over = false
-      #if is_straigth_line_full? || is_diagonal_full?
-      puts "is_diagonal_full: #{is_diagonal_full?}"
-      puts "is_straigth_line_full: #{is_straigth_line_full?}"
-      is_over
+      (is_straigth_line_full? || is_diagonal_full?) ? true : false
     end
 
     def is_straigth_line_full?
@@ -43,22 +39,14 @@ module Core
     end
 
     def is_diagonal_full?
-      if (@tictactoe[1,1] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,3] && @tictactoe[1,1] != " ") ||
-         (@tictactoe[1,3] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,1] && @tictactoe[1,3] != " ")
-        true
-      else
-        false
-      end
-    end
-
-    def declare_result
-      puts "tie"
+      ((@tictactoe[1,1] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,3] && @tictactoe[1,1] != " ") ||
+      (@tictactoe[1,3] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,1] && @tictactoe[1,3] != " ")) ?
+      true : false
     end
 
     def player_entry(row, column, mark)
       if is_space_empty?(row, column)
         @tictactoe[row, column] << mark
-        puts @is_vs_computer
         computer_entry if @is_vs_computer
       else
         puts "The space is ocuppied, try in another one"
@@ -80,7 +68,7 @@ module Core
     end
 
     def is_space_empty?(row, column)
-      true if @tictactoe[row, column] == " "
+      (@tictactoe[row, column] == " ") ? true : false
     end
 
   end
