@@ -25,18 +25,7 @@ end
 
 def start_game(option)
   checking(option)
-  #main_menu
-  print_tictactoe
-  insert_entry_menu
-  print_tictactoe
-end
-
-def main_menu
-  loop do
-   print_tictactoe
-   insert_entry_menu#(player)
-   break if @game.is_game_over?
-  end
+  main_menu
 end
 
 def checking(option)
@@ -47,6 +36,14 @@ def checking(option)
     @game.play_versus_computer
   else
     puts "Press 1 or 2"
+  end
+end
+
+def main_menu
+  loop do
+    print_tictactoe
+    insert_entry_menu
+    break if @game.is_game_over?
   end
 end
 
