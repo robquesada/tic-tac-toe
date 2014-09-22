@@ -56,12 +56,18 @@ def print_tictactoe
 end
 
 def insert_entry_menu
-  @game.player_entry(get_row.to_i, get_column.to_i)
+  puts "\nPlayer 1 (X)\n"
+  @game.player_entry(get_row.to_i, get_column.to_i, "X")
+  if !@game.is_vs_computer
+    print_tictactoe
+    puts "\nPlayer 2 (O)\n"
+    @game.player_entry(get_row.to_i, get_column.to_i, "O")
+  end
 end
 
 def get_column
   print_line(50)
-  puts "Now, Insert the number of the column\n1, 2 or 3"
+  puts "Now, insert the number of your column\n1, 2 or 3"
   print_line(50)
   gets.to_i
 end
