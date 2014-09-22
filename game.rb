@@ -24,28 +24,18 @@ module Core
 
     def is_game_over?
       is_over = false
-      puts "is_row_full: #{is_row_full?}"
-      puts "is_column_full: #{is_column_full?}"
+      #if is_straigth_line_full? || is_diagonal_full?
+      puts "is_diagonal_full: #{is_diagonal_full?}"
+      puts "is_straigth_line_full: #{is_straigth_line_full?}"
       is_over
     end
 
-    def is_row_full?
+    def is_straigth_line_full?
       is_full = false
       for i in 1..3
-        if (@tictactoe[i,1] == @tictactoe[i,2] && @tictactoe[i,2] == @tictactoe[i,3] && @tictactoe[i,1] != " ") then
+        if (@tictactoe[i,1] == @tictactoe[i,2] && @tictactoe[i,2] == @tictactoe[i,3] && @tictactoe[i,1] != " ") ||
+           (@tictactoe[1,i] == @tictactoe[2,i] && @tictactoe[2,i] == @tictactoe[3,i] && @tictactoe[1,i] != " ")
           is_full = true
-          break
-        end
-      end
-      is_full
-    end
-
-    def is_column_full?
-      is_full = false
-      for i in 1..3
-        if (@tictactoe[1,i] == @tictactoe[2,i] && @tictactoe[2,i] == @tictactoe[3,i] && @tictactoe[1,i] != " ") then
-          is_full = true
-          puts "column full"
           break
         end
       end
@@ -53,8 +43,12 @@ module Core
     end
 
     def is_diagonal_full?
-      #@tictactoe[1,1] == @tictactoe[2,2] == @tictactoe[3,3]
-      #@tictactoe[1,3] == @tictactoe[2,2] == @tictactoe[3,1]
+      if (@tictactoe[1,1] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,3] && @tictactoe[1,1] != " ") ||
+         (@tictactoe[1,3] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,1] && @tictactoe[1,3] != " ")
+        true
+      else
+        false
+      end
     end
 
     def declare_result
