@@ -10,7 +10,7 @@ module Core
         ["_", "1", "2", "3"],
         ["A", " ", " ", " "],
         ["B", " ", " ", " "],
-        ["C", " ", " ", " "]
+        ["C", " ", " ", " "],
       ]
     end
 
@@ -24,13 +24,30 @@ module Core
 
     def is_game_over?
       is_over = false
-      @tictactoe.to_a.each_with_index do |row, i|
-        if "X" == row[1] && "X" == row[2] && "X" == row[3]
-          is_over = true
-          declare_result
+      puts "is_row_full: #{is_row_full?}"
+      is_over
+    end
+
+    def is_row_full?
+      is_full = false
+      for i in 1..3
+        if (@tictactoe[i,1] == @tictactoe[i,2] && @tictactoe[i,2] == @tictactoe[i,3] && @tictactoe[i,1] != " ") then
+          is_full = true
+          break
         end
       end
-      is_over
+      is_full
+    end
+
+    def is_column_full?
+      for i in 1..3
+        true# if @tictactoe[1,i] == @tictactoe[2,i] == @tictactoe[3,i]
+      end
+    end
+
+    def is_diagonal_full?
+      #@tictactoe[1,1] == @tictactoe[2,2] == @tictactoe[3,3]
+      #@tictactoe[1,3] == @tictactoe[2,2] == @tictactoe[3,1]
     end
 
     def declare_result
@@ -54,7 +71,7 @@ module Core
         column_cpu = generate_random_entry
         break if is_space_empty?(row_cpu, column_cpu)
       end
-        @tictactoe[row_cpu, column_cpu] << "O"
+      @tictactoe[row_cpu, column_cpu] << "O"
     end
 
     def generate_random_entry
