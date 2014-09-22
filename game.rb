@@ -25,6 +25,7 @@ module Core
     def is_game_over?
       is_over = false
       puts "is_row_full: #{is_row_full?}"
+      puts "is_column_full: #{is_column_full?}"
       is_over
     end
 
@@ -40,9 +41,15 @@ module Core
     end
 
     def is_column_full?
+      is_full = false
       for i in 1..3
-        true# if @tictactoe[1,i] == @tictactoe[2,i] == @tictactoe[3,i]
+        if (@tictactoe[1,i] == @tictactoe[2,i] && @tictactoe[2,i] == @tictactoe[3,i] && @tictactoe[1,i] != " ") then
+          is_full = true
+          puts "column full"
+          break
+        end
       end
+      is_full
     end
 
     def is_diagonal_full?
