@@ -23,7 +23,7 @@ module Core
     end
 
     def is_game_over?
-      (is_straigth_line_full? || is_diagonal_full?) ? true : false
+      (is_straigth_line_full? || is_diagonal_full? || is_tictactoe_full?) ? true : false
     end
 
     def is_straigth_line_full?
@@ -42,6 +42,14 @@ module Core
       ((@tictactoe[1,1] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,3] && @tictactoe[1,1] != " ") ||
       (@tictactoe[1,3] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,1] && @tictactoe[1,3] != " ")) ?
       true : false
+    end
+
+    def is_tictactoe_full?
+      is_full = true
+      @tictactoe.each do |entry|
+        !(entry == " ") ? true : (is_full = false)
+      end
+      is_full
     end
 
     def player_entry(row, column, mark)

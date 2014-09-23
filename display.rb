@@ -6,8 +6,7 @@ public
 def initial_menu
   print_line(50)
   puts "Welcome to The Tic Tac Toe Game!\n\n"
-  puts "Choose an option:"
-  puts "(1) Player versus Player\n(2) Player versus Computer"
+  puts "Choose an option:\n(1) Player versus Player\n(2) Player versus Computer"
   print_line(50)
 
   option = gets.to_i
@@ -17,10 +16,6 @@ end
 
 def initialize_game
   @game = Core::Game.new
-end
-
-def print_line(length)
-  puts "-" * length
 end
 
 def start_game(option)
@@ -43,8 +38,22 @@ def main_menu
   loop do
     print_tictactoe
     insert_entry_menu
-    break if @game.is_game_over?
+    break if verify_if_game_over
   end
+end
+
+def verify_if_game_over
+  if @game.is_game_over?
+    game_over_menu
+    true
+  else
+    false
+  end
+end
+
+def game_over_menu
+  print_tictactoe
+  puts "\n +++++ GAME OVER +++++"
 end
 
 def print_tictactoe
@@ -53,6 +62,10 @@ def print_tictactoe
     puts " " if i == 0
     print_line(18) if i > 0 && i < 3 
   end
+end
+
+def print_line(length)
+  puts "-" * length
 end
 
 def insert_entry_menu
