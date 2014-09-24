@@ -65,16 +65,8 @@ module Core
     def generate_computer_entry(row_player, column_player)
       row = row_player
       col = column_player
-      if !block_player_diagonal(row, col)
-        if !block_player_horizontal(row, col)
-          if !block_player_vertical(row, col)
-            #puts "RANDOM +++++"
-            generate_random_entry
-          end
-        end
-      end
-      #(block_player_horizontal(row, col) || block_player_vertical(row, col) ||
-      # block_player_diagonal(row, col)) ? true : generate_random_entry
+      (block_player_horizontal(row, col) || block_player_vertical(row, col) ||
+       block_player_diagonal(row, col)) ? true : generate_random_entry
     end
 
     def block_player_diagonal(row, col)
