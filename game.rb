@@ -62,22 +62,13 @@ module Core
       end
     end
 
-    def computer_entry
-      row_cpu, column_cpu = 1
-      loop do
-        row_cpu = generate_random_entry
-        column_cpu = generate_random_entry
-        break if is_space_empty?(row_cpu, column_cpu)
-      end
-      @tictactoe[row_cpu, column_cpu] << "O"
-    end
-
     def generate_computer_entry(row_player, column_player)
-      puts "YEEEEP"
       row = row_player
       col = column_player
       if !block_player_horizontal(row, col)
-        generate_random_entry
+        if !block_player_vertical(row, col)
+          #generate_random_entry
+        end
       end
       
       #(block_player_horizontal(row, col) || block_player_vertical(row, col) ||
@@ -101,7 +92,7 @@ module Core
         if @tictactoe[row, col+1] == " X" && @tictactoe[row, col+2] == " "
           @tictactoe[row, col+2] << "O"
         elsif @tictactoe[row, col+1] == " " && @tictactoe[row, col+2] == " X"
-          @tictactow[row, col+1] << "O"
+          @tictactoe[row, col+1] << "O"
         else
           inserted = false
         end
@@ -109,7 +100,7 @@ module Core
         if @tictactoe[row, col-1] == " X" && @tictactoe[row, col+1] == " "
           @tictactoe[row, col+1] << "O"
         elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col+1] == " X"
-          @tictactow[row, col-1] << "O"
+          @tictactoe[row, col-1] << "O"
         else
           inserted = false
         end
@@ -117,7 +108,7 @@ module Core
         if @tictactoe[row, col-1] == " X" && @tictactoe[row, col-2] == " "
           @tictactoe[row, col-2] << "O"
         elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col-2] == " X"
-          @tictactow[row, col-1] << "O"
+          @tictactoe[row, col-1] << "O"
         else
           inserted = false
         end
@@ -126,21 +117,44 @@ module Core
     end
 
     def block_player_vertical(row, col)
+      inserted = true
       case row
       when 1
-        row += 1
+        if @tictactoe[row+1, col] == " X" && @tictactoe[row+2, col] == " "
+          @tictactoe[row+2, col] << "O"
+        elsif @tictactoe[row+1, col] == " " && @tictactoe[row+2, col] == " X"
+          @tictactoe[row+1, col] << "O"
+        else
+          inserted = false
+        end
       when 2
-
+        if @tictactoe[row-1, col] == " X" && @tictactoe[row+1, col] == " "
+          @tictactoe[row+1, col] << "O"
+        elsif @tictactoe[row-1, col] == " " && @tictactoe[row+1, col] == " X"
+          @tictactoe[row-1, col] << "O"
+        else
+          inserted = false
+        end
       when 3
-        row -= 1
-        col += 1
-      else
-        false
+        if @tictactoe[row-1, col] == " X" && @tictactoe[row-2, col] == " "
+          @tictactoe[row-2, col] << "O"
+        elsif @tictactoe[row-1, col] == " " && @tictactoe[row-2, col] == " X"
+          @tictactoe[row-1, col] << "O"
+        else
+          inserted = false
+        end
       end
+      inserted
     end
 
     def generate_random_entry
-      1 + rand(3)
+      row, col = 1
+      loop do
+        row = 1 + rand(3)
+        col = 1 + rand(3)
+        break if is_space_empty?(row, col)
+      end
+      @tictactoe[row, col] << "O"
     end
 
     def is_space_empty?(row, column)
