@@ -19,6 +19,7 @@ module Core
     end
 
     def play_versus_computer
+      #@computer = Computer.new
       @is_vs_computer = true
     end
 
@@ -55,7 +56,7 @@ module Core
     def player_entry(row, column, mark)
       if is_space_empty?(row, column)
         @tictactoe[row, column] << mark
-        computer_entry if @is_vs_computer
+        generate_computer_entry(row, column) if @is_vs_computer
       else
         puts "The space is ocuppied, try in another one"
       end
@@ -69,6 +70,73 @@ module Core
         break if is_space_empty?(row_cpu, column_cpu)
       end
       @tictactoe[row_cpu, column_cpu] << "O"
+    end
+
+    def generate_computer_entry(row_player, column_player)
+      puts "YEEEEP"
+      row = row_player
+      col = column_player
+      if !block_player_horizontal(row, col)
+        generate_random_entry
+      end
+      
+      #(block_player_horizontal(row, col) || block_player_vertical(row, col) ||
+      # block_player_diagonal(row, col)) ? true : generate_random_entry
+    end
+
+    def block_player_diagonal(row, col)
+      #Check 2,2
+      if row == 2 && col == 2
+        row = 2
+        col = 2
+      else
+        false
+      end
+    end
+
+    def block_player_horizontal(row, col)
+      inserted = true
+      case col
+      when 1
+        if @tictactoe[row, col+1] == " X" && @tictactoe[row, col+2] == " "
+          @tictactoe[row, col+2] << "O"
+        elsif @tictactoe[row, col+1] == " " && @tictactoe[row, col+2] == " X"
+          @tictactow[row, col+1] << "O"
+        else
+          inserted = false
+        end
+      when 2
+        if @tictactoe[row, col-1] == " X" && @tictactoe[row, col+1] == " "
+          @tictactoe[row, col+1] << "O"
+        elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col+1] == " X"
+          @tictactow[row, col-1] << "O"
+        else
+          inserted = false
+        end
+      when 3
+        if @tictactoe[row, col-1] == " X" && @tictactoe[row, col-2] == " "
+          @tictactoe[row, col-2] << "O"
+        elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col-2] == " X"
+          @tictactow[row, col-1] << "O"
+        else
+          inserted = false
+        end
+      end
+      inserted
+    end
+
+    def block_player_vertical(row, col)
+      case row
+      when 1
+        row += 1
+      when 2
+
+      when 3
+        row -= 1
+        col += 1
+      else
+        false
+      end
     end
 
     def generate_random_entry
