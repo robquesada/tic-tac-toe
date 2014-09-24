@@ -65,24 +65,36 @@ module Core
     def generate_computer_entry(row_player, column_player)
       row = row_player
       col = column_player
-      if !block_player_horizontal(row, col)
-        if !block_player_vertical(row, col)
-          #generate_random_entry
+      if !block_player_diagonal(row, col)
+        if !block_player_horizontal(row, col)
+          if !block_player_vertical(row, col)
+            #puts "RANDOM +++++"
+            generate_random_entry
+          end
         end
       end
-      
       #(block_player_horizontal(row, col) || block_player_vertical(row, col) ||
       # block_player_diagonal(row, col)) ? true : generate_random_entry
     end
 
     def block_player_diagonal(row, col)
-      #Check 2,2
-      if row == 2 && col == 2
-        row = 2
-        col = 2
+      inserted = true
+      if @tictactoe[2,2] == " X"
+        if @tictactoe[1,1] == " X" && @tictactoe[3,3] == " "
+          @tictactoe[3,3] << "O"
+        elsif @tictactoe[3,3] == " X" && @tictactoe[1,1] == " "
+          @tictactoe[1,1] << "O"
+        elsif @tictactoe[1,3] == " X" && @tictactoe[3,1] == " "
+          @tictactoe[3,1] << "O"
+        elsif @tictactoe[3,1] == " X" && @tictactoe[1,3] == " "
+          @tictactoe[1,3] << "O"
+        else
+          inserted = false
+        end
       else
-        false
+        inserted = false
       end
+      inserted
     end
 
     def block_player_horizontal(row, col)
