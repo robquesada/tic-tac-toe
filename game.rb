@@ -72,13 +72,13 @@ module Core
     def block_player_diagonal(row, col)
       inserted = true
       if @tictactoe[2,2] == " X"
-        if @tictactoe[1,1] == " X" && @tictactoe[3,3] == " "
+        if check_spaces_to_block(1,1,3,3)
           @tictactoe[3,3] << "O"
-        elsif @tictactoe[3,3] == " X" && @tictactoe[1,1] == " "
+        elsif check_spaces_to_block(3,3,1,1)
           @tictactoe[1,1] << "O"
-        elsif @tictactoe[1,3] == " X" && @tictactoe[3,1] == " "
+        elsif check_spaces_to_block(1,3,3,1)
           @tictactoe[3,1] << "O"
-        elsif @tictactoe[3,1] == " X" && @tictactoe[1,3] == " "
+        elsif check_spaces_to_block(3,1,1,3)
           @tictactoe[1,3] << "O"
         else
           inserted = false
@@ -93,25 +93,25 @@ module Core
       inserted = true
       case col
       when 1
-        if @tictactoe[row, col+1] == " X" && @tictactoe[row, col+2] == " "
+        if check_spaces_to_block(row, col+1, row, col+2)
           @tictactoe[row, col+2] << "O"
-        elsif @tictactoe[row, col+1] == " " && @tictactoe[row, col+2] == " X"
+        elsif check_spaces_to_block(row, col+2, row, col+1)
           @tictactoe[row, col+1] << "O"
         else
           inserted = false
         end
       when 2
-        if @tictactoe[row, col-1] == " X" && @tictactoe[row, col+1] == " "
+        if check_spaces_to_block(row, col-1, row, col+1)
           @tictactoe[row, col+1] << "O"
-        elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col+1] == " X"
+        elsif check_spaces_to_block(row, col+1, row, col-1)
           @tictactoe[row, col-1] << "O"
         else
           inserted = false
         end
       when 3
-        if @tictactoe[row, col-1] == " X" && @tictactoe[row, col-2] == " "
+        if check_spaces_to_block(row, col-1, row, col-2)
           @tictactoe[row, col-2] << "O"
-        elsif @tictactoe[row, col-1] == " " && @tictactoe[row, col-2] == " X"
+        elsif check_spaces_to_block(row, col-2, row, col-1)
           @tictactoe[row, col-1] << "O"
         else
           inserted = false
@@ -120,29 +120,33 @@ module Core
       inserted
     end
 
+    def check_spaces_to_block(row_marked, col_marked, row_empty, col_empty)
+      (@tictactoe[row_marked, col_marked] == " X" && @tictactoe[row_empty, col_empty] == " ") ? true : false
+    end
+
     def block_player_vertical(row, col)
       inserted = true
       case row
       when 1
-        if @tictactoe[row+1, col] == " X" && @tictactoe[row+2, col] == " "
+        if check_spaces_to_block(row+1, col, row+2, col)
           @tictactoe[row+2, col] << "O"
-        elsif @tictactoe[row+1, col] == " " && @tictactoe[row+2, col] == " X"
+        elsif check_spaces_to_block(row+2, col, row+1, col)
           @tictactoe[row+1, col] << "O"
         else
           inserted = false
         end
       when 2
-        if @tictactoe[row-1, col] == " X" && @tictactoe[row+1, col] == " "
+        if check_spaces_to_block(row-1, col, row+1, col)
           @tictactoe[row+1, col] << "O"
-        elsif @tictactoe[row-1, col] == " " && @tictactoe[row+1, col] == " X"
+        elsif check_spaces_to_block(row+1, col, row-1, col)
           @tictactoe[row-1, col] << "O"
         else
           inserted = false
         end
       when 3
-        if @tictactoe[row-1, col] == " X" && @tictactoe[row-2, col] == " "
+        if check_spaces_to_block(row-1, col, row-2, col)
           @tictactoe[row-2, col] << "O"
-        elsif @tictactoe[row-1, col] == " " && @tictactoe[row-2, col] == " X"
+        elsif check_spaces_to_block(row-2, col, row-1, col)
           @tictactoe[row-1, col] << "O"
         else
           inserted = false
