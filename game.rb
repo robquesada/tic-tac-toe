@@ -25,9 +25,9 @@ module Core
     def is_game_over?
       is_over = false
       @tictactoe.to_a.each_with_index do |row, i|
-       if " " != row[1] && " " != row[2] && " " != row[3]
-         is_over = true
-         declare_result
+        if "X" == row[1] && "X" == row[2] && "X" == row[3]
+          is_over = true
+          declare_result
         end
       end
       is_over
@@ -37,9 +37,9 @@ module Core
       puts "tie"
     end
 
-    def player_entry(row, column)
+    def player_entry(row, column, mark)
       if is_space_empty?(row, column)
-        @tictactoe[row, column] << "X"
+        @tictactoe[row, column] << mark
         puts @is_vs_computer
         computer_entry if @is_vs_computer
       else
@@ -50,14 +50,14 @@ module Core
     def computer_entry
       row_cpu, column_cpu = 1
       loop do
-        row_cpu = generate_computer_entry
-        column_cpu = generate_computer_entry
+        row_cpu = generate_random_entry
+        column_cpu = generate_random_entry
         break if is_space_empty?(row_cpu, column_cpu)
       end
         @tictactoe[row_cpu, column_cpu] << "O"
     end
 
-    def generate_computer_entry
+    def generate_random_entry
       1 + rand(3)
     end
 
