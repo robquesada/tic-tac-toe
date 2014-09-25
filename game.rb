@@ -1,7 +1,7 @@
 module Core
   class Game
 
-    attr_accessor :tictactoe, :is_vs_computer
+    attr_accessor :tictactoe, :is_vs_computer, :result
 
     require 'matrix'
 
@@ -10,7 +10,7 @@ module Core
         ["_", "1", "2", "3"],
         ["A", " ", " ", " "],
         ["B", " ", " ", " "],
-        ["C", " ", " ", " "]
+        ["C", " ", " ", " "],
       ]
     end
 
@@ -23,24 +23,38 @@ module Core
     end
 
     def is_game_over?
-      is_over = false
-      @tictactoe.to_a.each_with_index do |row, i|
-        if "X" == row[1] && "X" == row[2] && "X" == row[3]
-          is_over = true
-          declare_result
-        end
-      end
-      is_over
+      (is_straigth_line_full? || is_diagonal_full? || is_tictactoe_full?) ? true : false
     end
 
-    def declare_result
-      puts "tie"
+    def is_straigth_line_full?
+      is_full = false
+      for i in 1..3
+        if (@tictactoe[i,1] == @tictactoe[i,2] && @tictactoe[i,2] == @tictactoe[i,3] && @tictactoe[i,1] != " ") ||
+           (@tictactoe[1,i] == @tictactoe[2,i] && @tictactoe[2,i] == @tictactoe[3,i] && @tictactoe[1,i] != " ")
+          is_full = true
+          break
+        end
+      end
+      is_full
+    end
+
+    def is_diagonal_full?
+      ((@tictactoe[1,1] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,3] && @tictactoe[1,1] != " ") ||
+      (@tictactoe[1,3] == @tictactoe[2,2] && @tictactoe[2,2] == @tictactoe[3,1] && @tictactoe[1,3] != " ")) ?
+      true : false
+    end
+
+    def is_tictactoe_full?
+      is_full = true
+      @tictactoe.each do |entry|
+        !(entry == " ") ? true : (is_full = false)
+      end
+      is_full
     end
 
     def player_entry(row, column, mark)
       if is_space_empty?(row, column)
         @tictactoe[row, column] << mark
-        puts @is_vs_computer
         computer_entry if @is_vs_computer
       else
         puts "The space is ocuppied, try in another one"
@@ -54,7 +68,7 @@ module Core
         column_cpu = generate_random_entry
         break if is_space_empty?(row_cpu, column_cpu)
       end
-        @tictactoe[row_cpu, column_cpu] << "O"
+      @tictactoe[row_cpu, column_cpu] << "O"
     end
 
     def generate_random_entry
@@ -62,7 +76,7 @@ module Core
     end
 
     def is_space_empty?(row, column)
-      true if @tictactoe[row, column] == " "
+      (@tictactoe[row, column] == " ") ? true : false
     end
 
   end
