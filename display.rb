@@ -1,5 +1,5 @@
 $LOAD_PATH << '.'
-require 'game'
+require 'board'
 
 public
 
@@ -15,7 +15,7 @@ def initial_menu
 end
 
 def initialize_game
-  @game = Core::Game.new
+  @board = Fachade::Board.new
 end
 
 def start_game(option)
@@ -26,9 +26,9 @@ end
 def checking(option)
   case option
   when 1
-    @game.play_versus_player
+    @board.play_versus_player
   when 2
-    @game.play_versus_computer
+    @board.play_versus_computer
   else
     puts "Press 1 or 2"
   end
@@ -43,7 +43,7 @@ def main_menu
 end
 
 def verify_if_game_over
-  if @game.is_game_over?
+  if @board.is_game_over?
     game_over_menu
     true
   else
@@ -57,7 +57,7 @@ def game_over_menu
 end
 
 def print_tictactoe
-  @game.tictactoe.to_a.each_with_index do |row, i|
+  @board.get_tictactoe.to_a.each_with_index do |row, i|
     puts " #{row[0]}    #{row[1]} | #{row[2]} | #{row[3]}"
     puts " " if i == 0
     print_line(18) if i > 0 && i < 3 
@@ -70,11 +70,11 @@ end
 
 def insert_entry_menu
   puts "\nPlayer 1 (X)\n"
-  @game.player_entry(get_row.to_i, get_column.to_i, "X")
-  if !@game.is_vs_computer && !@game.is_game_over?
+  @board.player_entry(get_row.to_i, get_column.to_i, "X")
+  if !@board.is_vs_computer && !@board.is_game_over?
     print_tictactoe
     puts "\nPlayer 2 (O)\n"
-    @game.player_entry(get_row.to_i, get_column.to_i, "O")
+    @board.player_entry(get_row.to_i, get_column.to_i, "O")
   end
 end
 
