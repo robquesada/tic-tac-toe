@@ -19,6 +19,7 @@ module Core
     end
 
     def play_versus_computer
+      #@computer = Computer.new
       @is_vs_computer = true
     end
 
@@ -55,24 +56,113 @@ module Core
     def player_entry(row, column, mark)
       if is_space_empty?(row, column)
         @tictactoe[row, column] << mark
-        computer_entry if @is_vs_computer
+        generate_computer_entry(row, column) if @is_vs_computer
       else
         puts "The space is ocuppied, try in another one"
       end
     end
 
-    def computer_entry
-      row_cpu, column_cpu = 1
-      loop do
-        row_cpu = generate_random_entry
-        column_cpu = generate_random_entry
-        break if is_space_empty?(row_cpu, column_cpu)
+    def generate_computer_entry(row_player, column_player)
+      row = row_player
+      col = column_player
+      (block_player_horizontal(row, col) || block_player_vertical(row, col) ||
+       block_player_diagonal(row, col)) ? true : generate_random_entry
+    end
+
+    def block_player_diagonal(row, col)
+      inserted = true
+      if @tictactoe[2,2] == " X"
+        if check_spaces_to_block(1,1,3,3)
+          @tictactoe[3,3] << "O"
+        elsif check_spaces_to_block(3,3,1,1)
+          @tictactoe[1,1] << "O"
+        elsif check_spaces_to_block(1,3,3,1)
+          @tictactoe[3,1] << "O"
+        elsif check_spaces_to_block(3,1,1,3)
+          @tictactoe[1,3] << "O"
+        else
+          inserted = false
+        end
+      else
+        inserted = false
       end
-      @tictactoe[row_cpu, column_cpu] << "O"
+      inserted
+    end
+
+    def block_player_horizontal(row, col)
+      inserted = true
+      case col
+      when 1
+        if check_spaces_to_block(row, col+1, row, col+2)
+          @tictactoe[row, col+2] << "O"
+        elsif check_spaces_to_block(row, col+2, row, col+1)
+          @tictactoe[row, col+1] << "O"
+        else
+          inserted = false
+        end
+      when 2
+        if check_spaces_to_block(row, col-1, row, col+1)
+          @tictactoe[row, col+1] << "O"
+        elsif check_spaces_to_block(row, col+1, row, col-1)
+          @tictactoe[row, col-1] << "O"
+        else
+          inserted = false
+        end
+      when 3
+        if check_spaces_to_block(row, col-1, row, col-2)
+          @tictactoe[row, col-2] << "O"
+        elsif check_spaces_to_block(row, col-2, row, col-1)
+          @tictactoe[row, col-1] << "O"
+        else
+          inserted = false
+        end
+      end
+      inserted
+    end
+
+    def check_spaces_to_block(row_marked, col_marked, row_empty, col_empty)
+      (@tictactoe[row_marked, col_marked] == " X" && @tictactoe[row_empty, col_empty] == " ") ? true : false
+    end
+
+    def block_player_vertical(row, col)
+      inserted = true
+      case row
+      when 1
+        if check_spaces_to_block(row+1, col, row+2, col)
+          @tictactoe[row+2, col] << "O"
+        elsif check_spaces_to_block(row+2, col, row+1, col)
+          @tictactoe[row+1, col] << "O"
+        else
+          inserted = false
+        end
+      when 2
+        if check_spaces_to_block(row-1, col, row+1, col)
+          @tictactoe[row+1, col] << "O"
+        elsif check_spaces_to_block(row+1, col, row-1, col)
+          @tictactoe[row-1, col] << "O"
+        else
+          inserted = false
+        end
+      when 3
+        if check_spaces_to_block(row-1, col, row-2, col)
+          @tictactoe[row-2, col] << "O"
+        elsif check_spaces_to_block(row-2, col, row-1, col)
+          @tictactoe[row-1, col] << "O"
+        else
+          inserted = false
+        end
+      end
+      inserted
     end
 
     def generate_random_entry
-      1 + rand(3)
+      row, col = 1
+      loop do
+        row = 1 + rand(3)
+        col = 1 + rand(3)
+        break if is_space_empty?(row, col)
+      end
+      @tictactoe[row, col] << "O"
     end
 
     def is_space_empty?(row, column)
