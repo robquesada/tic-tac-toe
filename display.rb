@@ -7,8 +7,7 @@ def initial_menu
   print_line(50)
   puts "Welcome to The Tic Tac Toe Game!\n\n"
   puts "Choose an option:"
-  puts "(1) Player versus Player"
-  puts "(2) Player versus Computer"
+  puts "(1) Player versus Player\n(2) Player versus Computer"
   print_line(50)
 
   option = gets.to_i
@@ -26,9 +25,7 @@ end
 
 def start_game(option)
   checking(option)
-  print_tictactoe
-  insert_entry_menu
-  print_tictactoe
+  main_menu
 end
 
 def checking(option)
@@ -42,13 +39,19 @@ def checking(option)
   end
 end
 
+def main_menu
+  loop do
+    print_tictactoe
+    insert_entry_menu
+    break if @game.is_game_over?
+  end
+end
+
 def print_tictactoe
-  i = 0
-  @game.tictactoe.to_a.each do |row|
-   puts " #{row[0]}    #{row[1]} | #{row[2]} | #{row[3]}"
-   puts " " if i == 0
-   print_line(25) if i > 0 && i < 3 
-   i += 1
+  @game.tictactoe.to_a.each_with_index do |row, i|
+    puts " #{row[0]}    #{row[1]} | #{row[2]} | #{row[3]}"
+    puts " " if i == 0
+    print_line(18) if i > 0 && i < 3 
   end
 end
 
@@ -58,18 +61,16 @@ end
 
 def get_column
   print_line(50)
-  puts "Now, Insert the number of the column"
-  puts "1, 2 or 3"
+  puts "Now, Insert the number of the column\n1, 2 or 3"
   print_line(50)
-  column = gets.to_i
+  gets.to_i
 end
 
 def get_row
   print_line(50)
-  puts "Insert the letter of your row"
-  puts "A, B or C"
+  puts "Insert the letter of your row\nA, B or C"
   print_line(50)
-  row = convert_entry(gets.chomp)
+  convert_entry(gets.chomp)
 end
 
 def convert_entry(letter_row)
