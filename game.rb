@@ -43,9 +43,9 @@ module Core
     def player_entry(row, column, mark)
       if is_space_empty?(row, column)
         @tictactoe[row, column] << mark
-        #generate_computer_entry(row, column) if @is_vs_computer
+        true
       else
-        puts "The space is ocuppied, try in another one"
+        false
       end
     end
 

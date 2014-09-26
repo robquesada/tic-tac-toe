@@ -6,7 +6,7 @@ module Fachade
     require 'game'
     require 'computer'
 
-    attr_accessor :tictactoe, :game, :computer
+    attr_accessor :game, :computer
 
     def initialize
       @game = Core::Game.new

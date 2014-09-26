@@ -47,9 +47,9 @@ class Computer
   def check_block_player_horizontal(row, col, spaces_to_move_1, spaces_to_move_2)
     inserted = true
     if check_spaces_to_block(row, col+spaces_to_move_1, row, col+spaces_to_move_2)
-      insert_computer_mark(row+spaces_to_move_2, col)
+      insert_computer_mark(row, col+spaces_to_move_2)
     elsif check_spaces_to_block(row, col+spaces_to_move_2, row, col+spaces_to_move_1)
-      insert_computer_mark(row+spaces_to_move_1, col)
+      insert_computer_mark(row, col+spaces_to_move_1)
     else
       inserted = false
     end
@@ -66,7 +66,6 @@ class Computer
     when 1
       inserted = check_block_player_vertical(row, col, 1, 2)
     when 2
-      puts "vertical"
       inserted = check_block_player_vertical(row, col, -1, 1)
     when 3
       inserted = check_block_player_vertical(row, col, -1, -2)
@@ -76,7 +75,6 @@ class Computer
 
   def check_block_player_vertical(row, col, spaces_to_move_1, spaces_to_move_2)
     inserted = true
-    puts "check"
     if check_spaces_to_block(row+spaces_to_move_1, col, row+spaces_to_move_2, col)
       insert_computer_mark(row+spaces_to_move_2, col)
     elsif check_spaces_to_block(row+spaces_to_move_2, col, row+spaces_to_move_1, col)
@@ -88,7 +86,6 @@ class Computer
   end
 
   def insert_computer_mark(row, col)
-    puts "row: #{row}, col: #{col}"
     @game.tictactoe[row, col] << "O"
   end
 
