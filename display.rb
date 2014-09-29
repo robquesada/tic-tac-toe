@@ -30,7 +30,8 @@ def checking(option)
   when 2
     @board.play_versus_computer
   else
-    puts "Press 1 or 2"
+    puts "\nInvalid option. Please, press 1 or 2.\n"
+    initial_menu
   end
 end
 
@@ -103,11 +104,11 @@ def validate_entry(entry)
     if entry >= 1 && entry <= 3
       true
     else
-      puts "\nThis is not a valid entry. Please, try it again.\n"
+      puts "\nThat is not a valid entry. Please, try it again.\n"
       false
     end
   else
-    puts "\nThis is not a valid entry. Please, try it again.\n"
+    puts "\nThat is not a valid entry. Please, try it again.\n"
     false
   end
 end
