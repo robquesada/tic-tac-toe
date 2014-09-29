@@ -30,7 +30,8 @@ def checking(option)
   when 2
     @board.play_versus_computer
   else
-    puts "Press 1 or 2"
+    puts "\nInvalid option. Please, press 1 or 2.\n"
+    initial_menu
   end
 end
 
@@ -74,22 +75,46 @@ def insert_entry_menu
   if !@board.is_vs_computer && !@board.is_game_over?
     print_tictactoe
     puts "\nPlayer 2 (O)\n"
-    @board.player_entry(get_row.to_i, get_column.to_i, "O")
+    @board.player_entry(get_row, get_column, "O")
   end
 end
 
 def get_column
-  print_line(50)
-  puts "Now, insert the number of your column\n1, 2 or 3"
-  print_line(50)
-  gets.to_i
+  begin
+    print_line(50)
+    puts "Insert the number of your column\n1, 2 or 3"
+    print_line(50)
+    col = gets.to_i
+  end until validate_entry(col)
+  col
 end
 
 def get_row
-  print_line(50)
-  puts "Insert the letter of your row\nA, B or C"
-  print_line(50)
-  convert_entry(gets.chomp)
+  begin
+    print_line(50)
+    puts "Insert the letter of your row\nA, B or C"
+    print_line(50)
+    row = convert_entry(gets.chomp)
+  end until validate_entry(row)
+  row
+end
+
+def validate_entry(entry)
+  if is_number?(entry)
+    if entry >= 1 && entry <= 3
+      true
+    else
+      puts "\nThat is not a valid entry. Please, try it again.\n"
+      false
+    end
+  else
+    puts "\nThat is not a valid entry. Please, try it again.\n"
+    false
+  end
+end
+
+def is_number?(value)
+  true if Integer(value) rescue false
 end
 
 def convert_entry(letter_row)
