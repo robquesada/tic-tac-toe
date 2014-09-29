@@ -78,6 +78,15 @@ def insert_entry_menu
   end
 end
 
+#def a
+#  if is_numeric(get_row)
+#    true
+#  else
+#    puts "x is not a valid number for your column"
+#    false
+#  end
+#end
+
 def get_column
   print_line(50)
   puts "Now, insert the number of your column\n1, 2 or 3"

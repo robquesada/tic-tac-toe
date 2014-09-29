@@ -15,15 +15,13 @@ module Core
     end
 
     def is_straigth_line_full?
-      is_full = false
       for i in 1..3
         if (@tictactoe[i,1] == @tictactoe[i,2] && @tictactoe[i,2] == @tictactoe[i,3] && @tictactoe[i,1] != " ") ||
           (@tictactoe[1,i] == @tictactoe[2,i] && @tictactoe[2,i] == @tictactoe[3,i] && @tictactoe[1,i] != " ")
-          is_full = true
-          break
+          return true
         end
       end
-      is_full
+      return false
     end
 
     def is_diagonal_full?

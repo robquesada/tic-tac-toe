@@ -30,7 +30,7 @@ module Fachade
 
     def player_entry(row, column, mark)
       @game.player_entry(row, column, mark)
-      @computer.generate_computer_entry(row, column) if @computer != nil
+      @computer.generate_computer_entry(row, column) if @computer != nil && !is_game_over?
     end
 
     def is_game_over?
