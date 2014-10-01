@@ -17,7 +17,7 @@ class Computer
     corners_to_block = [[[1,1], [3,3]], [[3,3], [1,1]],
                         [[1,3], [3,1]], [[3,1], [1,3]]]
     computer_inserts = [[3,3], [1,1], [3,1], [1,3]]
-    for i in 0..2
+    for i in 0..3
       if check_spaces_to_block(corners_to_block[i][0], corners_to_block[i][1])
         insert_computer_mark(computer_inserts[i][0], computer_inserts[i][1])
         return true
