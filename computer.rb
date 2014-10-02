@@ -6,7 +6,6 @@ class Computer
 
   def generate_computer_entry(row_player, col_player)
     blocked_diagonal = block_player_diagonal if is_center_marked?
-    puts blocked_diagonal
     if !blocked_diagonal
       (block_player_horizontal(row_player, col_player) ||
        block_player_vertical(row_player, col_player)) ? true : generate_random_entry
