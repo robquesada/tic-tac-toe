@@ -101,16 +101,10 @@ end
 
 def validate_entry(entry)
   if is_number?(entry)
-    if entry >= 1 && entry <= 3
-      true
-    else
-      puts "\nThat is not a valid entry. Please, try it again.\n"
-      false
-    end
-  else
-    puts "\nThat is not a valid entry. Please, try it again.\n"
-    false
+    return true if entry >= 1 && entry <= 3
   end
+  puts "\nThat is not a valid entry. Please, try it again.\n"
+  false
 end
 
 def is_number?(value)

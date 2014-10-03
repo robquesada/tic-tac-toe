@@ -4,78 +4,68 @@ class Computer
     @game = game
   end
 
-  def generate_computer_entry(row_player, column_player)
-    col = column_player
-    row = row_player
-    (block_player_horizontal(row, col) || block_player_vertical(row, col) ||
-     block_player_diagonal(row, col)) ? true : generate_random_entry
+  def generate_computer_entry(row_player, col_player)
+    blocked_diagonal = block_player_diagonal if is_center_marked?
+    puts blocked_diagonal
+    if !blocked_diagonal
+      (block_player_horizontal(row_player, col_player) ||
+       block_player_vertical(row_player, col_player)) ? true : generate_random_entry
+    end
   end
 
-  def block_player_diagonal(row, col)
-    if @game.tictactoe[2,2] == " X"
-      if check_spaces_to_block(1,1,3,3)
-        insert_computer_mark(3, 3)
-      elsif check_spaces_to_block(3,3,1,1)
-        insert_computer_mark(1, 1)
-      elsif check_spaces_to_block(1,3,3,1)
-        insert_computer_mark(3, 1)
-      elsif check_spaces_to_block(3,1,1,3)
-        insert_computer_mark(1, 3)
+  def block_player_diagonal
+    corners_to_block = [[[1,1], [3,3]], [[3,3], [1,1]],
+                        [[1,3], [3,1]], [[3,1], [1,3]]]
+    computer_inserts = [[3,3], [1,1], [3,1], [1,3]]
+    for i in 0..2
+      if check_spaces_to_block(corners_to_block[i][0], corners_to_block[i][1])
+        insert_computer_mark(computer_inserts[i][0], computer_inserts[i][1])
+        return true
       else
-        return false
+        false
       end
-    else
-      return false
     end
-    return true
+  end
+
+  def is_center_marked?
+    (@game.tictactoe[2,2] == " X") ? true : false
   end
 
   def block_player_horizontal(row, col)
-    case col
-    when 1
-      return check_block_player_horizontal(row, col, 1, 2)
-    when 2
-      return check_block_player_horizontal(row, col, -1, 1)
-    when 3
-      return check_block_player_horizontal(row, col, -1, -2)
-    end
+    spaces_to_move = [[1, 2], [-1, 1], [-1, -2]]
+    check_block_player_horizontal(row, col, spaces_to_move[col-1])
   end
 
-  def check_block_player_horizontal(row, col, spaces_to_move_1, spaces_to_move_2)
-    if check_spaces_to_block(row, col+spaces_to_move_1, row, col+spaces_to_move_2)
-      insert_computer_mark(row, col+spaces_to_move_2)
-    elsif check_spaces_to_block(row, col+spaces_to_move_2, row, col+spaces_to_move_1)
-      insert_computer_mark(row, col+spaces_to_move_1)
+  def check_block_player_horizontal(row, col, spaces_to_move)
+    if check_spaces_to_block([row, col+spaces_to_move[0]], [row, col+spaces_to_move[1]])
+      insert_computer_mark(row, col+spaces_to_move[1])
+    elsif check_spaces_to_block([row, col+spaces_to_move[1]], [row, col+spaces_to_move[0]])
+      insert_computer_mark(row, col+spaces_to_move[0])
     else
       return false
     end
-    return true
+    true
   end
 
-  def check_spaces_to_block(row_marked, col_marked, row_empty, col_empty)
-    (@game.tictactoe[row_marked, col_marked] == " X" && @game.tictactoe[row_empty, col_empty] == " ") ? true : false
+  def check_spaces_to_block(marked_position, empty_position)
+    (@game.tictactoe[marked_position[0], marked_position[1]] == " X" &&
+     @game.tictactoe[empty_position[0], empty_position[1]] == " ") ? true : false
   end
 
   def block_player_vertical(row, col)
-    case row
-    when 1
-      return check_block_player_vertical(row, col, 1, 2)
-    when 2
-      return check_block_player_vertical(row, col, -1, 1)
-    when 3
-      return check_block_player_vertical(row, col, -1, -2)
-    end
+    spaces_to_move = [[1, 2], [-1, 1], [-1, -2]]
+    check_block_player_vertical(row, col, spaces_to_move[row-1])
   end
 
-  def check_block_player_vertical(row, col, spaces_to_move_1, spaces_to_move_2)
-    if check_spaces_to_block(row+spaces_to_move_1, col, row+spaces_to_move_2, col)
-      insert_computer_mark(row+spaces_to_move_2, col)
-    elsif check_spaces_to_block(row+spaces_to_move_2, col, row+spaces_to_move_1, col)
-      insert_computer_mark(row+spaces_to_move_1, col)
+  def check_block_player_vertical(row, col, spaces_to_move)
+    if check_spaces_to_block([row+spaces_to_move[0], col], [row+spaces_to_move[1], col])
+      insert_computer_mark(row+spaces_to_move[1], col)
+    elsif check_spaces_to_block([row+spaces_to_move[1], col], [row+spaces_to_move[0], col])
+      insert_computer_mark(row+spaces_to_move[0], col)
     else
       return false
     end
-    return true
+    true
   end
 
   def insert_computer_mark(row, col)
