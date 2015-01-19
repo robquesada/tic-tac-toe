@@ -6,7 +6,6 @@ class Computer
 
   def generate_computer_entry(row_player, col_player)
     blocked_diagonal = block_player_diagonal if is_center_marked?
-    puts blocked_diagonal
     if !blocked_diagonal
       (block_player_horizontal(row_player, col_player) ||
        block_player_vertical(row_player, col_player)) ? true : generate_random_entry
@@ -17,7 +16,11 @@ class Computer
     corners_to_block = [[[1,1], [3,3]], [[3,3], [1,1]],
                         [[1,3], [3,1]], [[3,1], [1,3]]]
     computer_inserts = [[3,3], [1,1], [3,1], [1,3]]
-    for i in 0..2
+    check_block_player_diagonal(corners_to_block, computer_inserts)
+  end
+
+  def check_block_player_diagonal(corners_to_block, computer_inserts)
+    for i in 0..3
       if check_spaces_to_block(corners_to_block[i][0], corners_to_block[i][1])
         insert_computer_mark(computer_inserts[i][0], computer_inserts[i][1])
         return true

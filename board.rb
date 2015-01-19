@@ -25,12 +25,12 @@ module Fachade
     end
 
     def is_vs_computer
-      (@computer != nil) ? true : false
+      !@computer.nil?
     end
 
     def player_entry(row, column, mark)
       @game.player_entry(row, column, mark)
-      @computer.generate_computer_entry(row, column) if @computer != nil && !is_game_over?
+      @computer.generate_computer_entry(row, column) if !@computer.nil? && !is_game_over?
     end
 
     def is_game_over?
